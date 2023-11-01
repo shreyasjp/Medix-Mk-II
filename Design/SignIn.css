@@ -1,0 +1,93 @@
+#logo{
+    position: relative;
+    width: 80px;
+    height: 80px;
+    align-self: baseline;
+    border-radius: 16px;
+    margin: 0 0 10px 0;
+}
+#header{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#header h1{
+  font-size: 50px;
+  margin: 0 0 40px 0;
+  font-weight: 500;
+}
+#header p {
+    font-size: 20px;
+    margin: 0 0 10px 0;
+    font-weight: 300;
+}
+#next-button{
+    display: inline-flex;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    top: 8px;
+    cursor: pointer;
+}
+form{
+    width: 500px;
+}
+form h1{
+    width: 400px;
+    text-align: center;
+    font-size: 25px;
+    margin-top: 0%;
+    font-weight: 500;
+}
+#form-logo{
+  width: 150px;
+  height: 150px;
+  filter: contrast(120%);
+}
+#captcha-section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+#captcha-code{
+    height: 50px;
+}
+#form-submit-button {
+    margin: 10px;
+    color: #ffffff;
+    border: 0;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 100;
+    cursor: pointer;
+}
+.error{
+    font-size: 11px;
+    text-align: left;
+    align-self: baseline;
+    margin: 0 0 0 0;
+}
+#captcha-error{
+    align-self: center;
+}
+#checkbox{
+    margin: 10px 0 5px 0;
+}
+a{
+    text-decoration: none;
+    color: var(--light-accent-color);
+}
+#fgpswd{
+    margin: 10px 0 0 0;
+}
+.message{
+    margin-top: 5px;
+}

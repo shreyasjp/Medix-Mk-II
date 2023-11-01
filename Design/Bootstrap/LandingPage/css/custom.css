@@ -1,0 +1,96 @@
+.nav-link{
+  font-size: 14px;
+}
+.brand-heading{
+  background: linear-gradient(to right, #27b3d6, rgb(4, 117, 102));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.medpro{
+  text-transform: none !important;
+}
+.btn-default:hover {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+  color: #f9f9f9 !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .search-icon{
+    display: none;
+  }
+  #home, #about-box, #MedPro-Search-box, #support-box{
+    transform: scale(0.8);
+  }
+  .nav-item .nav-link{
+    padding: 5px;
+  }
+  #navbarResponsive {
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+  .navbar-nav{
+    justify-content: flex-start !important;
+    height: 100vh;
+  }
+  .nav-link{
+    transform: scale(0.88);
+  }
+  .navbar-brand{
+    padding-right: 13px;
+    margin: 0;
+    padding: 7px !important;
+  }
+  #brand-name{
+    font-size: 14px !important;
+  }
+  .brand-heading{
+    margin-bottom: 15px;
+  }
+}
+
+@media only screen and (max-width: 300px){
+  #home, #about-box, #MedPro-Search-box, #support-box{
+    transform: scale(0.7);
+  }
+  #button-group-home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #button-group-home button.btn.btn-primary{
+    margin: 5px 0 5px 0 !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .nav-link {
+    padding-bottom: 4px !important;
+    padding-top: 4px !important;
+    font-family: Montserrat, sans-serif;
+  }
+}
+
+::-webkit-scrollbar{
+  width: 7px;
+}
+::-webkit-scrollbar-track{
+  background: #242424;
+}
+::-webkit-scrollbar-thumb{
+  background: #7d7d7d;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: #f9f9f94f;
+}
+@supports(scrollbar-color: red blue){
+  *{
+    scrollbar-color: #242424 #f9f9f9;
+  }
+}

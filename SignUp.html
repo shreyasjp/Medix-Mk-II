@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Create your Medix ID</title>
+    <meta
+      id="viewport"
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover"
+    />
+    <link rel="preload" href="Data/Fonts/GothamLight.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="Data/Fonts/GothamMedium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="Data/Fonts/GothamBold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" as="image" href="Data/Animations/SpinnerMedium.svg">
+    <link rel="preload" as="image" href="Data/Animations/SpinnerSmall.svg">
+    <link rel="stylesheet" type="text/css" href="Design/Basic.css" />
+    <link rel="stylesheet" type="text/css" href="Design/ColorScheme.css" />
+    <link rel="stylesheet" type="text/css" href="Design/InputBox.css" />
+    <link rel="stylesheet" type="text/css" href="Design/PasswordFields.css" />
+    <link rel="stylesheet" type="text/css" href="Design/Messages.css" />
+    <link rel="stylesheet" type="text/css" href="Design/SignUp.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="Data/Favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="Data/Favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="Data/Favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="Data/Favicon/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="Data/Favicon/safari-pinned-tab.svg"
+      color="#212121"
+    />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="theme-color" content="#000000" />
+  </head>
+  <body class="light">
+    <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
+    <div id="container" class="hide">
+        <div id="header">
+            <h1>Create your Medix ID</h1>
+            <p id="existing-user-prompt">You already have a Medix ID?</p>
+            <p id="links">
+              <a href="SignIn.html"> Sign in </a>
+              or<a href="ForgotPassword.html">
+                Find it here <span id="redirect-symbol">></span></a
+              >
+            </p>
+          </div>
+          <form id="form" action="PHP Modules/SignUp.php" method="post">
+            <div id="name-box" class="input-box">
+              <label for="name-input" id="name-label"
+                >What should we call you?</label
+              >
+              <input
+                type="text"
+                name="name"
+                id="name-input"
+                spellcheck="false"
+                autocomplete="off"
+                aria-autocomplete="off"
+                aria-required="true"
+                required
+              />
+            </div>
+            <p class="error hide" id="name-error">
+              <span class="error-symbol">🛈</span> Enter a valid name without numbers
+              or special characters.
+            </p>
+            <div id="medixid-box" class="input-box">
+              <label for="medixid-input" id="medixid-label">Email</label>
+              <input
+                type="text"
+                name="medixid"
+                id="medixid-input"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                aria-autocomplete="off"
+                aria-required="true"
+                required
+              />
+            </div>
+            <p id="medixid-error" class="error  hide">
+              <span class="error-symbol">🛈</span> Your email is'nt valid
+            </p>
+            <p id="medixid-message" class="message">
+              This will be your new Medix ID.
+            </p>
+            <div class="input-box password" id="password-box">
+              <input
+                type="password"
+                name="password"
+                id="password-input"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                aria-autocomplete="off"
+                aria-required="true"
+                required
+              />
+              <label for="password-input" id="password-label">Password</label>
+              <p id="password-input-visibility-toggle" class="password-visibility-toggle">SHOW</p>
+            </div>
+            <div id="password-strength-validation-box" class="hide">
+              <p
+                id="password-validation-heading"
+                class="password-validation-heading"
+              >
+                Your password must have:
+              </p>
+              <p id="password-validation-charcount" class="password-validations">
+                8 or more characters
+              </p>
+              <p id="password-validation-case" class="password-validations">
+                upper and lowercase characters
+              </p>
+              <p id="password-validation-number" class="password-validations">
+                atleast one number
+              </p>
+              <p id="password-validation-specialchar" class="password-validations">
+                atleast one special character
+              </p>
+              <p
+                id="password-validation-meter-heading"
+                class="password-validation-heading"
+              >
+                Strength:
+              </p>
+              <div id="password-strength-meter">
+                <div
+                  id="password-strength-meter-filler"
+                  class="password-strength-meter-fill"
+                ></div>
+              </div>
+              <p id="password-validation-consecutive-characters-error" class="error hide">
+                <span class="error-symbol">🛈</span> Too many consecutive identical
+                characters.
+              </p>
+            </div>
+            <div class="input-box password" id="password-confirmation-box">
+              <input
+                type="password"
+                name="password-confimration"
+                id="password-confirmation-input"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                aria-autocomplete="off"
+                aria-required="true"
+                required
+              />
+              <label for="password-confirmation-input" id="password-confirmation-label"
+                >Confirm password</label
+              >
+              <p id="password-confirmation-input-visibility-toggle" class="password-visibility-toggle">SHOW</p>
+            </div>
+            <p class="error hide" id="password-confirmation-error">
+              <span class="error-symbol">🛈</span> Passwords do not match.
+            </p>
+            <div class="input-box" id="captcha-answer-box">
+              <input
+                type="text"
+                name="captcha-answer"
+                id="captcha-answer-input"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                aria-autocomplete="off"
+                aria-required="true"
+                required
+              />
+              <label for="captcha-answer-input" id="captcha-answer-label"
+                >Security Code</label
+              >
+            </div>
+            <p id="captcha-error" class="error hide">
+              <span class="error-symbol">🛈</span> Please enter the characters you
+              see to continue.
+            </p>
+            <img
+              id="captcha-code"
+              src="Data/Animations/SpinnerMedium.svg"
+              alt="Captcha"
+            />
+            <p id="captcha-message" class="message">
+              Click on the image to refresh.
+            </p>
+            <img
+              id="apple-privacy-icon"
+              src="Data/Icons/PrivacyAgreement.png"
+            />
+            <p id="privacy-policy" class="message">
+              Your Medix ID information is used to allow you to sign in securely and
+              access your data. Medix records certain data for security, support and
+              reporting purposes.
+            </p>
+            <input type="submit" class="submit" id="form-submit-button" value="Continue" />
+            <img id="submit-loader" class="hide" src="Data/Animations/SpinnerSmall.svg">
+          </form>
+    </div>
+    <script type="text/javascript" src="Flow/Session.js"></script>  
+    <script type="text/javascript" src="Flow/ThemeSelector.js"></script>
+    <script type="text/javascript" src="Flow/Validations.js"></script>
+    <script type="text/javascript" src="Flow/InputLabelHandling.js"></script>
+    <script type="text/javascript" src="Flow/SignUp.js"></script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "Gotham";
+  src: url("../Data/Fonts/GothamLight.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("../Data/Fonts/GothamMedium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("../Data/Fonts/GothamBold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  font-family: Gotham;
+  font-weight: 100;
+  min-width: 99vw;
+  min-height: 99vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;  
+  -webkit-user-select: none;
+  /* For Safari */
+  -moz-user-select: none;
+  /* For Firefox */
+  -ms-user-select: none;
+  /* For Microsoft Edge */
+  -webkit-user-drag: none;
+  /* For Safari */
+  -moz-user-drag: none;
+  /* For Firefox */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 768px) {
+  #container {
+    transform: scale(0.85);
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+input::-ms-reveal {
+  display: none;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--light-text-color);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #ffffff00;
+}
+.dark input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--dark-text-color);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #ffffff00;
+}
+

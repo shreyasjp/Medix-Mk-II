@@ -1,0 +1,28 @@
+.error {
+    color: #ff0000;
+  }
+  .dark .error {
+    color: #ff6666;
+  }
+  .box-error {
+    border-color: rgb(255, 140, 140) !important;
+    background-color: #ffd1d1;
+    color: red !important;
+  }
+  .dark .box-error {
+    border-color: #ff4e4e !important;
+    background-color: #e08c8c21;
+    color: #ff6666 !important;
+  }
+  .box-error label {
+    color: red !important;
+  }
+  .condition-verified {
+    color: #5d9971 !important;
+  }
+  .message{
+    color: #898989;
+  }
+  .dark .message{
+    color: #989898;
+  }

@@ -1,0 +1,23 @@
+:root, [data-bs-theme=light] {
+  --bs-body-color: #242424;
+  --bs-body-color-rgb: 36,36,36;
+  --bs-secondary-color: rgba(36,36,36,0.75);
+  --bs-secondary-color-rgb: 36,36,36,0.75;
+  --bs-tertiary-color: rgba(36,36,36,0.5);
+  --bs-tertiary-color-rgb: 36,36,36,0.5;
+  --bs-body-bg: #f9f9f9;
+  --bs-body-bg-rgb: 249,249,249;
+  --bs-body-font-family: Montserrat, sans-serif;
+}
+
+[data-bs-theme=dark] {
+  --bs-body-color: #efefef;
+  --bs-body-color-rgb: 239,239,239;
+  --bs-secondary-color: rgba(239,239,239,0.75);
+  --bs-secondary-color-rgb: 239,239,239,0.75;
+  --bs-tertiary-color: rgba(239,239,239,0.5);
+  --bs-tertiary-color-rgb: 239,239,239,0.5;
+  --bs-body-bg: #282828;
+  --bs-body-bg-rgb: 40,40,40;
+}
+

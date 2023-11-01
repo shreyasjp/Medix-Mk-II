@@ -1,0 +1,105 @@
+#sharing .input-box textarea{
+    display: flex;  
+    width: 98%;
+    height: 65%;
+    font-size: 12;
+    padding: 25px 5px 0 7px;
+    border: none;
+    outline: none;
+    background: none;
+    resize: none;
+  }
+  .light #sharing .input-box textarea{
+    color: var(--light-text-color);
+  }
+  .dark #sharing .input-box textarea{
+    color: var(--dark-text-color);
+  }
+  #sharing-doctor-message-box{
+    height: 80px;
+  }
+
+  #sharing-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    height: auto;
+    justify-content: center;
+    padding-top: 60px;
+  }
+  
+  #sharing-header {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  #sharing-header p{
+    text-align: center;
+    font-size: 14px;
+    margin: 10px 0 20px 0;
+    font-weight: 100;
+  }
+  /* Header Title */
+  #sharing-header h1 {
+    text-align: center;
+    font-size: 35px;
+    margin: 0 0 0px 0;
+    font-weight: 500;
+  }
+
+  #sharing .input-box label.active {
+    transform: translate(0, 7px) scale(0.9) !important;
+  }
+  #sharing-doctor-message-label{
+    transform: translate(0, 30px) scale(1);
+    transform-origin: top left;
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  #sharing-doctor-message-box:focus-within label {
+    transform: translate(0, 7px) scale(0.9) !important;
+  }
+  #sharing-doctor-message-box label.active {
+    transform: translate(0, 7px) scale(0.9) !important;
+  }
+
+  #sharing-form-submit-button {
+    margin: 10px;
+    color: #ffffff;
+    border: 0;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 100;
+    cursor: pointer;
+}
+#sharing-form {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+#sharing-form p{
+  width: 100%;
+  justify-self: left;
+  text-align: left;
+  padding: 0%;
+  margin: 0 0 0 5px;
+}
+#sharing-doctor-success{
+  text-align: center;
+}
+#sharing-doctor-error{
+  text-align: center !important;
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Sign in • Medix</title>
+    <meta
+      id="viewport"
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover"
+    />
+    <link rel="preload" href="Data/Fonts/GothamLight.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="Data/Fonts/GothamMedium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="Data/Fonts/GothamBold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" as="image" href="Data/Animations/SpinnerMedium.svg">
+    <link rel="preload" as="image" href="Data/Animations/SpinnerSmall.svg">
+    <link rel="stylesheet" type="text/css" href="Design/Basic.css" />
+    <link rel="stylesheet" type="text/css" href="Design/ColorScheme.css" />
+    <link rel="stylesheet" type="text/css" href="Design/InputBox.css" />
+    <link rel="stylesheet" type="text/css" href="Design/PasswordFields.css" />
+    <link rel="stylesheet" type="text/css" href="Design/Messages.css" />
+    <link rel="stylesheet" type="text/css" href="Design/Checkmark.css" />
+    <link rel="stylesheet" type="text/css" href="Design/SignIn.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="Data/Favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="Data/Favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="Data/Favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="Data/Favicon/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="Data/Favicon/safari-pinned-tab.svg"
+      color="#212121"
+    />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="theme-color" content="#000000" />
+  </head>
+  <body class="light">
+    <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
+    <div id="container" class="hide">
+        <div id="header">
+            <img id="logo" src="Data/MEDiqo.png">
+            <h1>Sign in to manage your Medix account.</h2>
+            <p>A single Medix ID and password gives you access to all Medix services. <img id="next-button" src="Data/Icons/NextBlack.png" onclick="Next()"></p>            
+          </div>
+          <form id="form" class="hide" action="PHP Modules/SignIn.php" method="post">
+            <img id="form-logo" src="Data/Favicon/android-chrome-192x192.png">
+            <h1>Sign in to Medix</h2>
+            <div id="medixid-box" class="input-box">
+              <label for="medixid-input" id="medixid-label">Medix ID</label>
+              <input
+                type="text"
+                name="medixid"
+                id="medixid-input"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                aria-autocomplete="off"
+                aria-required="true"
+                required
+              />
+            </div>
+            <p id="medixid-error" class="error  hide">
+              <span class="error-symbol">🛈</span> Your email is'nt valid
+            </p>
+            <div class="input-box password" id="password-box">
+              <input
+                type="password"
+                name="password"
+                id="password-input"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                aria-autocomplete="off"
+                aria-required="true"
+                required
+              />
+              <label for="password-input" id="password-label">Password</label>
+              <p id="password-input-visibility-toggle" class="password-visibility-toggle">SHOW</p>
+            </div>
+            <p id="password-error" class="error hide">
+              <span class="error-symbol">🛈</span> Medix ID or password was incorrect.
+            </p>
+            <div id="captcha-section" class="hide">
+            <div class="input-box" id="captcha-answer-box">
+                <input
+                  type="text"
+                  name="captcha-answer"
+                  id="captcha-answer-input"
+                  spellcheck="false"
+                  autocapitalize="off"
+                  autocomplete="off"
+                  aria-autocomplete="off"
+                  aria-required="true"
+                />
+                <label for="captcha-answer-input" id="captcha-answer-label"
+                  >Security Code</label
+                >
+              </div>
+              <img
+                id="captcha-code"
+                src="Data/Animations/SpinnerMedium.svg"
+                alt="Captcha"
+              />
+            </div>
+            <p id="captcha-error" class="error hide">
+              <span class="error-symbol">🛈</span> Please enter the characters you
+              see to continue.
+            </p>
+            <label class="checkbox message">
+              <input class="checkbox-input" name="remember-me" value="1" type="checkbox">
+              <span class="checkmark"></span><span class="label-text">Remember me</span>
+            </label>
+            <input type="submit" class="submit" id="form-submit-button" value="Continue" />
+            <img id="submit-loader" class="hide" src="Data/Animations/SpinnerSmall.svg">
+            <a
+                href="ForgotPassword.html"
+                target="_blank" id="fgpswd"
+                >Forgot password?
+                <span class="symbol">🡥</span></a
+              >
+            <p class="message">
+              Don't have a Medix ID?
+              <a href="SignUp.html" target="_blank"
+                >Create yours now. <span class="symbol">🡥</span></a
+              >
+            </p>
+          </form>
+    </div>
+    <script type="text/javascript" src="Flow/Session.js"></script>  
+    <script type="text/javascript" src="Flow/ThemeSelector.js"></script>
+    <script type="text/javascript" src="Flow/Validations.js"></script>
+    <script type="text/javascript" src="Flow/InputLabelHandling.js"></script>
+    <script type="text/javascript" src="Flow/SignIn.js"></script>
+  </body>
+</html>
