@@ -42,14 +42,25 @@ $query = "SELECT * FROM `medix-user-profile` WHERE mx_id = :id";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':id', $id);
 $stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($stmt->rowCount() <= 0){
+  header('Location: NewUser.php');
+  exit();
+}
+else{
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+if(!$row['completion_status']){
+  header('Location: NewUser.php');
+  exit();
+}
 $age = $row['age'];
 $gender = $row['gender'];
 $height = $row['height'];
 $weight = $row['weight'];
 $bloodGroup = $row['blood_group'];
 
-$profilePic = isset($row['profile_pic_location']) ? $row['profile_pic_location'] : ($gender == 'Male' ? 'Data/Icons/ProfileMale.png' : 'Data/Icons/ProfileFemale.png');
+$profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile_pic_location'] : ($gender == 'Male' ? 'Data/Icons/ProfileMale.png' : 'Data/Icons/ProfileFemale.png');
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -297,8 +308,8 @@ $profilePic = isset($row['profile_pic_location']) ? $row['profile_pic_location']
     </div>
     </section>
 
-    <section id="profile-edit" class="hide profile-sections"><p>edit</p></section>
-    <section id="profile-privacy" class="hide profile-sections"><p>privacy</p></section>
+    <section id="profile-edit" class="hide profile-sections"></section>
+    <section id="profile-privacy" class="hide profile-sections"></section>
 
     <section id="upload" class="sections hide">
       <div id="upload-section-container">
@@ -581,11 +592,11 @@ $profilePic = isset($row['profile_pic_location']) ? $row['profile_pic_location']
               <input type="submit"  id="sharing-form-submit-button" class="submit" value="Continue">
               <img id="sharing-submit-loader" class="hide" src="Data/Animations/SpinnerSmall.svg">
               <p id="sharing-doctor-error" class="error  hide">
-                <span class="error-symbol">🛈</span> We encountered an error while trying to share your document. Please
+                <span class="error-symbol">🛈</span> We encountered an error while trying to share your profile. Please
                 try again later.
               </p>  
               <p id="sharing-doctor-success" class="message  hide">
-                Your document has been shared with your doctor.
+                Your profile has been shared with your doctor.
               </p>
             </form>
           </div>
