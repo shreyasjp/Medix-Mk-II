@@ -53,4 +53,27 @@ function changePasswordButton() {
     document.getElementById('change-password').classList.remove('active-text');
     document.getElementById('delete-account').classList.add('active-text');
   }
-  
+
+  function copyToClipboard(button) {
+    var textToCopy = $('#real-content').text().trim();
+    var tempInput = $('<input>');
+    $('body').append(tempInput);
+    tempInput.val(textToCopy).select();
+    document.execCommand('copy');
+    tempInput.remove();
+
+    // Change the icon and show the confirmation message
+    $(button).children('.patient-id-icon').find('img').attr('src', 'Data/Icons/Copy.png');
+    $('#real-content').addClass('hide');
+    $('#copied-message').removeClass('hide');
+    $('#patient-id').addClass('filter-active');
+
+
+    // Revert back to the actual patient ID after 3 seconds
+    setTimeout(function() {
+        $('#copied-message').addClass('hide');
+        $('#real-content').removeClass('hide');
+        $('#patient-id').removeClass('filter-active');
+        $(button).children('.patient-id-icon').find('img').attr('src', 'Data/Icons/Copy.png');
+    }, 2000);
+}

@@ -184,7 +184,7 @@ $(document).ready(function () {
       e.preventDefault();
 
       isConfirmation = false;
-      $('#doc-modal #delete-doc-button').html('<span class="filter-icons"><img src="Data/Icons/Delete.png"></span>Delete');
+      $('#doc-modal #delete-doc-button').html('<span class="filter-icons"><img src="Data/Icons/Delete.png"></span>');
 
   
       // Get data from the clicked link
@@ -193,8 +193,16 @@ $(document).ready(function () {
       currentDocData.uploadDate = $(this).data('uploaddate');
       currentDocData.desc = $(this).data('description');
       currentDocData.absoluteDocPath = $(this).data('path');
-      currentDocData.docPath = 'Medix MK II/' + $(this).data('path');
       currentDocData.docIcon = $(this).data('icon');
+      currentDocData.docPath = 'Medix/' + $(this).data('path');
+
+      // Check if the file type is PDF (case-insensitive check)
+      if (currentDocData.docIcon.toLowerCase().includes("pdf")) {
+        $('#doc-modal iframe').removeAttr('sandbox');
+        currentDocData.docPath = 'Flow/ViewerJS/#/Code/Medix-Mk-II/Medix/' + $(this).data('path');
+      }else{
+        $('#doc-modal iframe').attr('sandbox', 'allow-same-origin');
+      }
       currentDocData.isVerified = $(this).data('verified');
       currentDocData.docID = $(this).data('id');
       
@@ -205,6 +213,7 @@ $(document).ready(function () {
       $('#doc-modal .expanded-doc-description').text('Description: ' + currentDocData.desc);
       $('#doc-modal .expanded-doc-icon').attr('src', currentDocData.docIcon);
       $('#doc-modal iframe').attr('src', currentDocData.docPath);
+      $('#doc-modal #share-doc-button').attr('href', 'ShareDocs.php?docID=' + currentDocData.docID);
   
       // Show the modal
       $('#doc-modal').removeClass('hide');
@@ -216,7 +225,7 @@ $(document).ready(function () {
       $('#doc-modal iframe').attr('src', '');
       $('#doc-modal').addClass('hide');
       isConfirmation = false;
-      $('#doc-modal #delete-doc-button').html('<span class="filter-icons"><img src="Data/Icons/Delete.png"></span>Delete');
+      $('#doc-modal #delete-doc-button').html('<span class="filter-icons"><img src="Data/Icons/Delete.png"></span>');
     });
 
     document.getElementById('doc-modal').addEventListener('click', function (event) {
@@ -225,7 +234,7 @@ $(document).ready(function () {
       $('#doc-modal iframe').attr('src', '');
       $('#doc-modal').addClass('hide');
       isConfirmation = false;
-      $('#doc-modal #delete-doc-button').html('<span class="filter-icons"><img src="Data/Icons/Delete.png"></span>Delete');
+      $('#doc-modal #delete-doc-button').html('<span class="filter-icons"><img src="Data/Icons/Delete.png"></span>');
       }
     });
   
@@ -243,4 +252,13 @@ $(document).ready(function () {
           isConfirmation = true;
         }
       });
+
+      $('#doc-modal iframe').on('load', function() {
+        // Check if the iframe content couldn't be loaded
+        if (!this.contentDocument || !this.contentDocument.body || this.contentDocument.body.innerHTML === '') {
+          $('#doc-modal iframe').removeAttr('sandbox');
+          this.contentWindow.location.replace('NoDisplay.html'); // Load the failure HTML file in the iframe
+        }
+      });
   });
+

@@ -9,10 +9,15 @@ $stmt->execute();
 
 if ($stmt->rowCount() > 0) {
     $exists = true;
+    $row = $stmt->fetch();
+    $id = $row['mx_id'];
 } else {
     $exists = false;
 }
 $response = array('exists' => $exists);
+if ($exists) {
+    $response['id'] = $id;
+}
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>

@@ -30,6 +30,7 @@ $iconLinks = [
 ];
 
 $id = $_SESSION['id'];
+$patientID = "MXP" . $id;
 $query = "SELECT * FROM `medix-users` WHERE mx_id = :id";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':id', $id);
@@ -104,7 +105,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
   <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
   <nav class="hide">
     <div class="nav-content">
-      <a href="#body" class="logo">
+      <a href="home.php" class="logo">
         <svg id="brand-logo" width="24" height="24" display="block">
           <image width="24" height="24" href="Data/MEDiqo.png">
         </svg>
@@ -147,6 +148,8 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
             <h3 id="email">
               <?php echo $medixID; ?>
               </h2>
+              <button id="patient-id" onclick="copyToClipboard(this);"><span id="real-content"><?php echo $patientID?><span class="patient-id-icon"><img
+                src="Data/Icons/Copy.png"></span></span><span class="filter-active hide" id="copied-message">Copied to clipboard</span></button>
           </div>
           <div id="profile-link">
             <a class="profile-link active-text" id="profile-info-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-info', this)">Personal Information</a>
@@ -552,13 +555,13 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
     <p class="expanded-doc-description"></p>
 
 
-    <iframe src="" frameborder="1" sandbox="allow-same-origin"></iframe>
+    <iframe src="NoDisplay.html" frameborder="1" height="420" width="560" ></iframe>
 <div class="expanded-buttons">
-<button id="delete-doc-button">Delete<span class="filter-icons"><img
+<button id="delete-doc-button"><span class="filter-icons"><img
                 src="Data/Icons/Delete.png"></span></button>
-<button id="close-doc-button">Close</button>
-<a href="" download><button id="download-doc-button" >Download&nbsp<span class="filter-icons"><img
-                src="Data/Icons/Download.png"></span></button></a>
+<a href="" download><button id="download-doc-button" ><span class="filter-icons"><img src="Data/Icons/Download.png"></span></button></a>
+<a href="" target="_blank" id="share-doc-button"><span class="filter-icons"><img src="Data/Icons/Share.png"></span></a>       
+<button id="close-doc-button"><span class="filter-icons"><img src="Data/Icons/Exit.png"></span></button>         
 <p class="error hide" id="delete-error">The file could'nt be deleted.</p>
 </div>
   </div>

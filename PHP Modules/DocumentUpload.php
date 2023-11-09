@@ -14,6 +14,7 @@ $is_verified = 0;
 
 if (isset($_POST["owner"])) { 
     $owner = $_POST['owner'];
+    $is_verified = 1;
 } else {
     $owner = $_SESSION['id']; // Set the owner to the session id if not provided
 }
