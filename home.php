@@ -598,7 +598,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
                 <span class="error-symbol">🛈</span> We encountered an error while trying to share your profile. Please
                 try again later.
               </p>  
-              <p id="sharing-doctor-success" class="message  hide">
+              <p id="sharing-doctor-success" style="text-align: center;" class="message  hide">
                 Your profile has been shared with your doctor.
               </p>
             </form>

@@ -5,10 +5,34 @@ if (!isset($_SESSION['id'])) {
   header('Location: index.php');
   exit();
 }
-/*if (!isset($_SESSION['MedProID'])){
+if (!isset($_SESSION['MedProID'])){
+  header('Location: MedProVerify.php');
+  exit();
+}else{
+  $MedProID = $_SESSION['MedProID'];
+  $query = "SELECT * FROM `medix-medical-personnel` WHERE medpro_id = :id";
+  $stmt = $conn->prepare($query);
+  $stmt->bindParam(':id', $MedProID);
+  $stmt->execute();
+  if ($stmt->rowCount() <= 0){
     header('Location: MedProVerify.php');
     exit();
-}*/
+  }else{
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if(!$row['verification_status']){
+      header('Location: MedProVerify.php');
+      exit();
+    }
+    else{
+      if($row['role'] != "Medical Doctor"){
+        $access = false;
+      }
+      else{
+        $access = true;
+      }
+    }
+  }
+}
 
 $iconLinks = [
   "jpg" => "Data/Icons/JPEG-JPG.png",
@@ -92,7 +116,11 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 <body class="light">
   <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
   <div id="container" class="hide">
-      <div id="profile-content" class="section-content">
+  <h1 style="font-size: 36px;" class="<?php echo $access?'hide':''; ?>">You do not have access to this page.</h1>
+      <div id="profile-content" class="section-content <?php echo !$access?'hide':''; ?>">
+      <?php if (!$access) {
+        echo "<script>setTimeout(function() { window.close(); }, 2000);</script>";
+      } ?>
         <div id="left-panel">
           <div id="dp-box">
             <img id="dp" src="<?php echo $profilePic; ?>">

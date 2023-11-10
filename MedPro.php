@@ -5,10 +5,38 @@ if (!isset($_SESSION['id'])) {
   header('Location: index.php');
   exit();
 }
-/*if (!isset($_SESSION['MedProID'])){
+
+$id = $_SESSION['id'];
+$patientID = "MXP" . $id;
+$query = "SELECT * FROM `medix-medical-personnel` WHERE mx_id = :id";
+$stmt = $conn->prepare($query);
+$stmt->bindParam(':id', $id);
+$stmt->execute();
+if ($stmt->rowCount() <= 0){
+  header('Location: MedProVerify.php');
+  exit();
+}
+else{
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  if(!$row['verification_status']){
     header('Location: MedProVerify.php');
     exit();
-}*/
+  }
+  else{
+    $_SESSION['MedProID'] = $row['medpro_id'];
+    if($row['role'] != "Medical Doctor"){
+      $isDoc = false;
+    }
+    else{
+      $isDoc = true;
+    }
+  }
+}
+
+if (!isset($_SESSION['MedProID'])){
+    header('Location: MedProVerify.php');
+    exit();
+}
 
 function getAgeGroup($age) {
   if ($age <= 1) {
@@ -65,7 +93,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 
 <head>
   <meta charset="utf-8" />
-  <title>Home • Medix</title>
+  <title>MedPro • Medix</title>
   <meta id="viewport" name="viewport"
     content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover" />
   <script type="text/javascript" src="Flow/jQuery.js"></script>
@@ -99,7 +127,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
   <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
   <nav class="hide">
     <div class="nav-content">
-      <a href="home.php" class="logo">
+      <a href="index.php" class="logo">
         <svg id="brand-logo" width="24" height="24" display="block">
           <image width="24" height="24" href="Data/MEDiqo.png">
         </svg>
@@ -111,9 +139,10 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
       </div>
 
       <div class="nav-links">
-        <a href="javascript:void(0);" onclick="showSection('profile',this)" class='active-text'>Home</a>
-        <a href="javascript:void(0);" onclick="showSection('upload',this)">Upload Patient Document</a>
-        <a href="javascript:void(0);" onclick="showSection('manage',this)">Manage Patients</a>
+        <a href="home.php">Home</a>
+        <a href="javascript:void(0);" onclick="showSection('profile',this)" class='active-text'>Profile</a>
+        <a href="javascript:void(0);" onclick="showSection('upload',this)">Upload</a>
+        <a href="javascript:void(0);" onclick="showSection('manage',this)">Patients</a>
         <a href="PHP Modules/SignOut.php">Sign Out</a>
       </div>
 
@@ -290,158 +319,145 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
           </button>
           <input type="submit" class="submit" id="upload-form-submit-button" value="Continue" />
           <img id="upload-submit-loader" class="hide" src="Data/Animations/SpinnerSmall.svg">
-          <p class="message hide" id="upload-status">Document uploaded to Medix.</p>
+          <p class="message hide" style="text-align: center;" id="upload-status">Document uploaded to Medix.</p>
         </form>
       </div>
     </section>
     <section id="manage" class="sections hide">
-      <?php
-      require_once 'PHP Modules/Connect.php';
-      // Start the session
-      start_session();
-      $NoDocs = false;
+  <?php
+  require_once 'PHP Modules/Connect.php';
+  // Start the session
+  start_session(); // Fixed the typo 'start_session' to 'session_start'
+  $NoDocs = false;
 
-      // Retrieve session variables
-      $mx_id = $_SESSION['id']; // Replace 'username' with the actual variable name you stored
-      
-      $sql = "SELECT * FROM `medix-sharing` WHERE doc_mx_id = :medixId";
-      $stmt = $conn->prepare($sql);
-      $stmt->bindParam(':medixId', $mx_id);
-      $stmt->execute();
-      $docs = $stmt->fetchAll();
+  // Retrieve session variables
+  $mx_id = $_SESSION['id']; // Replace 'username' with the actual variable name you stored
 
-      if (empty($docs)) {
-        $NoDocs = true;
-        $NoDocsJSON = json_encode($NoDocs);
-        echo "<script>var NoDocs = $NoDocsJSON;</script>";
+  $sql = "SELECT * FROM `medix-sharing` WHERE doc_mx_id = :medixId";
+  $stmt = $conn->prepare($sql);
+  $stmt->bindParam(':medixId', $mx_id, PDO::PARAM_INT); // Specify data type
+  $stmt->execute();
+  $docs = $stmt->fetchAll();
+
+  if (empty($docs)) {
+    $NoDocs = true;
+    $NoDocsJSON = json_encode($NoDocs);
+    echo "<script>var NoDocs = $NoDocsJSON;</script>";
+  }
+  ?>
+
+  <h1 class="<?php echo $isDoc ? 'hide' : ''; ?>" style="font-size: 36px;">This feature is only accessible to doctors.</h1>
+  <div id="manage-container" class="<?php echo !$isDoc ? 'hide' : ''; ?>">
+    <div id="manage-header">
+      <h1 id="manage-title">Manage Patients</h1>
+      <p id="manage-desc">Effortlessly Access Your Patient History</p>
+    </div>
+
+    <div id="manage-filters-container">
+      <p id="gender-filter-male" class="gender-filter">
+        <span class="filter-icons"><img src="Data/Icons/Male.png"></span>Male
+      </p>
+      <p id="gender-filter-female" class="gender-filter">
+        <span class="filter-icons"><img src="Data/Icons/Female.png"></span>Female
+      </p>
+
+      <input type="text" id="search-input" class="apple-placeholder" placeholder='Search'>
+
+      <select id="sort-files" class="apple-placeholder">
+        <option value="Default">Sort</option>
+        <option value="NameAscending">Sort by Name (a-z)</option>
+        <option value="NameDescending">Sort by Name (z-a)</option>
+        <option value="Oldest">Sort by Patient ID (Ascending)</option>
+        <option value="Newest">Sort by Patient ID (Descending)</option>
+      </select>
+
+      <button id="Filter-preview" onclick="FilterPreview();" class="apple-button">
+        <span class="filter-icons"><img src="Data/Icons/Filter.png"></span>Filter by age group
+      </button>
+
+      <div id="manage-filters" class="hide">
+        <p id="age-filter-infants" class="age-filter">
+          Infants
+        </p>
+        <p id="age-filter-child" class="age-filter">
+          Children
+        </p>
+        <p id="age-filter-adolescents" class="age-filter">
+          Adolescents
+        </p>
+        <p id="age-filter-adults" class="age-filter">
+          Adults
+        </p>
+        <p id="age-filter-elders" class="age-filter">
+          Elderly
+        </p>
+      </div>
+    </div>
+
+    <div id="docs-container">
+      <?php if ($NoDocs) {
+        echo "<h1>There are no patients yet.</h1>";
       }
-      ?>
-      <div id="manage-container" class="">
-        <div id="manage-header">
-          <h1 id="manage-title">Manage Patients</h1>
-          <p id="manage-desc">Effortlessly Access Your Patient History</p>
-        </div>
-          
-        <div id="manage-filters-container">
-
-        <p id="doctype-male-filter" class="gender-filter">
-            <span class="filter-icons"><img src="Data/Icons/Male.png"></span>Male
-          </p>
-          <p id="filetype-female-filter" class="gender-filter">
-            <span class="filter-icons"><img src="Data/Icons/Female.png"></span>Female
-          </p>
-
-        
-          <input type="text" id="search-input" class="apple-placeholder" placeholder='Search'>
-
-    
-          <select id="sort-files" class="apple-placeholder">
-            <option value="Default">Sort</option>
-            <option value="NameAscending">Sort by Name (a-z)</option>
-            <option value="NameDescending">Sort by Name (z-a)</option>
-            <option value="Oldest">Sort by Patient ID (Ascending)</option>
-            <option value="Newest">Sort by Patient ID (Descending)</option>
-          </select>
-
-          <button id="Filter-preview" onclick="FilterPreview();" class="apple-button"><span class="filter-icons"><img
-              src="Data/Icons/Filter.png"></span>Filter by age group</button>
-
-          <div id="manage-filters" class="hide">
-
-
-          <p id="filetype-infants-filter" class="age-filter">
-            </span>Infants
-          </p>
-          <p id="filetype-child-filter" class="age-filter">
-            Children
-          </p>
-          <p id="filetype-adolescents-filter" class="age-filter">
-            Adolescents
-          </p>
-          <p id="filetype-adults-filter" class="age-filter">
-            Adults
-          </p>
-          <p id="filetype-elders-filter" class="age-filter">
-            Elderly
-          </p>
-          </div>
-        </div>
-
-
-
-
-      <div id="docs-container">
-        <?php if ($NoDocs) {
-          echo "<p>There are no patients yet.</p>";
-        }
-        foreach ($docs as $doc): ?>
-          <?php
-
-
-
-          
-
+      if ($isDoc && !$NoDocs) {
+        foreach ($docs as $doc) {
           $sql = "SELECT * FROM `medix-users` WHERE mx_id = :medixId";
           $stmt = $conn->prepare($sql);
-          $stmt->bindParam(':medixId', $doc['mx_id']);
+          $stmt->bindParam(':medixId', $doc['mx_id'], PDO::PARAM_INT); // Specify data type
           $stmt->execute();
           $users = $stmt->fetch();
 
           $sql = "SELECT * FROM `medix-user-profile` WHERE mx_id = :medixId";
           $stmt = $conn->prepare($sql);
-          $stmt->bindParam(':medixId', $doc['mx_id']);
+          $stmt->bindParam(':medixId', $doc['mx_id'], PDO::PARAM_INT); // Specify data type
           $stmt->execute();
           $userProfile = $stmt->fetch();
-          
+
           $userGender = $userProfile['gender'];
-          $profilePicLocation = 'Medix MK II/'.$userProfile['profile_pic_location'];
-          $userProfilePic = isset($userProfile['profile_pic_location']) ? "Medix Mk II/".$userProfile['profile_pic_location'] : ($userGender == 'Male' ? 'Data/Icons/ProfileMale.png' : 'Data/Icons/ProfileFemale.png');
+          $profilePicLocation = 'Medix MK II/' . $userProfile['profile_pic_location'];
+          $userProfilePic = isset($userProfile['profile_pic_location']) ? "Medix Mk II/" . $userProfile['profile_pic_location'] : ($userGender == 'Male' ? 'Data/Icons/ProfileMale.png' : 'Data/Icons/ProfileFemale.png');
           ?>
-          <a target="_blank" href="<?php echo "PatientDetails.php?pid=MXP" . $doc['mx_id']; ?>" 
-          data-name="<?php echo $users['name']; ?>"
-              data-medixID="<?php echo $users['email']; ?>" 
-              data-age="<?php echo $userProfile['age']; ?>"
-              data-height="<?php echo $userProfile['height']; ?>" 
-              data-weight="<?php echo $userProfile['weight']; ?>"
-              data-path="<?php echo $userProfile['profile_pic_location']; ?>" 
-              data-gender="<?php echo $userProfile['gender']; ?>"
-              data-ageGroup="<?php echo getAgeGroup($userProfile['age']); ?>"
-              data-bloodGroup="<?php echo $userProfile['blood_group']; ?>"
-              data-ID="<?php echo $users['mx_id']; ?>"
-              >
-              <div class="doc-icon">
-                <?php echo '<img id="file-type-symbol" src="' . $profilePicLocation . '">'; ?>
-              </div>
-              <div class="doc-info">
-                <p class="doc-info-titles doc-name">
-                <?php echo $users['name'];
-                ?><button id="patient-id" class=""><?php echo 'MXP'.$users['mx_id']; ?></button>
+          <a target="_blank" href="<?php echo "PatientDetails.php?pid=MXP" . $doc['mx_id']; ?>"
+             data-name="<?php echo $users['name']; ?>"
+             data-medixID="<?php echo $users['email']; ?>"
+             data-age="<?php echo $userProfile['age']; ?>"
+             data-height="<?php echo $userProfile['height']; ?>"
+             data-weight="<?php echo $userProfile['weight']; ?>"
+             data-path="<?php echo $userProfile['profile_pic_location']; ?>"
+             data-gender="<?php echo $userProfile['gender']; ?>"
+             data-ageGroup="<?php echo getAgeGroup($userProfile['age']); ?>"
+             data-bloodGroup="<?php echo $userProfile['blood_group']; ?>"
+             data-ID="<?php echo $users['mx_id']; ?>"
+          >
+            <div class="doc-icon">
+              <?php echo '<img id="file-type-symbol" src="' . $profilePicLocation . '">'; ?>
+            </div>
+            <div class="doc-info">
+              <p class="doc-info-titles doc-name">
+                <?php echo $users['name']; ?>
+                <button id="patient-id" class=""><?php echo 'MXP' . $users['mx_id']; ?></button>
               </p>
               <p class="doc-info-titles doc-type">
                 <?php echo strtolower($users['email']); ?>
               </p>
-              
+
               <div id="patient-sub-info">
-              
-              <p class="doc-info-titles doc-file-type">
-                <?php echo $userProfile['gender'];?>
-              </p>
-              <p class="doc-info-titles doc-upload-date" >
-                Age: <?php echo $userProfile['age']; ?>
-              </p>
-              
-        </div>
-        
+                <p class="doc-info-titles doc-file-type">
+                  <?php echo $userProfile['gender']; ?>
+                </p>
+                <p class="doc-info-titles doc-upload-date">
+                  Age: <?php echo $userProfile['age']; ?>
+                </p>
+              </div>
             </div>
           </a>
         <?php
-        endforeach;
-        ?>
-      </div>
+        }
+      }
+      ?>
+    </div>
+  </div>
+</section>
 
-
-      </div>
-    </section>
   </div>
 <script type="text/javascript" src="Flow/Session.js"></script>
 <script type="text/javascript" src="Flow/ThemeSelector.js"></script>
