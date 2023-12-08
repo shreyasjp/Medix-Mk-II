@@ -35,11 +35,14 @@ if ($user) {
           $token = bin2hex(random_bytes(32)); // Generate a secure token
 
           // Store the token in the user's browser as a cookie
-          setcookie('remember_token', $token, time() + 7 * 24 * 60 * 60, '/', '', true, true);
+          setcookie('remember_token', $token, time() + 14 * 24 * 60 * 60, '/', '', true, true);
 
           // Store the token in the database along with the user's ID and expiration time
-          $expiration = date('Y-m-d H:i:s', time() + 7 * 24 * 60 * 60);
-          $sql = "INSERT INTO `medix-user-sessions` (mx_id, token, expiry) VALUES (:user_id, :token, :expiration)";
+          $expiration = date('Y-m-d H:i:s', time() + 14 * 24 * 60 * 60);
+          $sql = "INSERT INTO `medix-user-sessions` (mx_id, token, expiry)
+          VALUES (:user_id, :token, :expiration)
+          ON DUPLICATE KEY UPDATE token = VALUES(token), expiry = VALUES(expiry);
+          ";
           $stmt = $conn->prepare($sql);
           $stmt->bindParam(':user_id', $mx_id);
           $stmt->bindParam(':token', $token);

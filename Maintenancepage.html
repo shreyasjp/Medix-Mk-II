@@ -1,0 +1,52 @@
+<html>
+  <head>
+  <meta charset="utf-8" />
+  <title>Home • Medix</title>
+  <meta id="viewport" name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover" />
+  <script type="text/javascript" src="Flow/jQuery.js"></script>
+  <link rel="preload" href="Data/Fonts/GothamLight.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="Data/Fonts/GothamMedium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="Data/Fonts/GothamBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="Data/Animations/SpinnerMedium.svg">
+  <link rel="preload" as="image" href="Data/Animations/SpinnerSmall.svg">
+  <link rel="stylesheet" href="Data/Fonts/FontAwesome.css" />
+  <link rel="stylesheet" type="text/css" href="Design/Maintenancepagestyle.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="Data/Favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="Data/Favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="Data/Favicon/favicon-16x16.png" />
+  <link rel="manifest" href="Data/Favicon/site.webmanifest" />
+  <link rel="mask-icon" href="Data/Favicon/safari-pinned-tab.svg" color="#212121" />
+  <meta name="msapplication-TileColor" content="#000000" />
+  <meta name="theme-color" content="#000000" />
+  </head>
+
+  <body class="light">
+    <div class="container">
+      <center>
+        <img
+          src="Data\Favicon\android-chrome-384x384.png"
+          id="logo"
+          alt="MEDIX"
+        />
+      </center>
+      <h1>We'll be back.</h1>
+      <center>
+        <p class="p1">
+          We can't wait for you to see it.<br />Please check back soon.
+        </p>
+      </center>
+    </div>
+    <script>
+      const body = document.body;
+
+      //Auto theme matching
+
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        body.classList.add("dark");
+      } else {
+        body.classList.remove("dark");
+      }
+    </script>
+  </body>
+</html>

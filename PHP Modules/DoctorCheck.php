@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+start_session();
 $response = array();
 $doc_id = false;
 $email = $_POST['email'];
@@ -12,7 +13,7 @@ $stmt->execute();
 if ($stmt->rowCount() > 0) {
     $user = $stmt->fetch();
 
-    $sql = "SELECT * FROM `medix-medical-personnel` WHERE mx_id = :id AND verification_status = 'Approved' AND role = 'Medical Doctor'";
+    $sql = "SELECT * FROM `medix-medical-personnel` WHERE mx_id = :id AND verification_status = 1 AND role = 'Medical Doctor'";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $user['mx_id']);
     $stmt->execute();
@@ -20,7 +21,13 @@ if ($stmt->rowCount() > 0) {
         $user = $stmt->fetch();
             $exists = true;
             $doc_id = $user['mx_id'];
-    } else {
+            if($user['mx_id'] == $_SESSION['id']){
+                $sameUserError = true;
+            }
+            else{
+                $sameUserError = false;
+            }
+        } else {
         $exists = false;
     }
 } else {
@@ -28,6 +35,9 @@ if ($stmt->rowCount() > 0) {
 }
 $response['exists'] = $exists;
 $response['doc_id'] = $doc_id;
+if($exists){
+    $response['sameUserError'] = $sameUserError;
+}
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>

@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+start_session();
 
 $response = array();
 $patient_name = false;
@@ -27,8 +28,16 @@ if ($stmt->rowCount() > 0) {
     $patient_gender = $user['gender'];
     $patient_age = $user['age'];
 
+    if($user['mx_id'] == $_SESSION['id']){
+        $sameUserError = true;
+    }
+    else{
+        $sameUserError = false;
+    }
+
 } else {
     $exists = false;
+
 }
 
 $response['exists'] = $exists;
@@ -36,6 +45,9 @@ $response['name'] = $patient_name;
 $response['gender'] = $patient_gender;
 $response['age'] = $patient_age;
 $response['id'] = $pid;
+if($exists){
+    $response['sameUserError'] = $sameUserError;
+}
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>

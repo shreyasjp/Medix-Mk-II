@@ -142,6 +142,9 @@ svg{
     .show .search-icon{
         order: 3;
     }
+    #bar{
+        display: none;
+    }
 }
 
 .show .one {

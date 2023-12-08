@@ -66,17 +66,25 @@ function ShareData(medixID, message){
         try {
           const result = await doctor_check(medixid);
           if (result.exists) {
+            if(result.sameUserError){
+              status = false;
+              sharinginputboxes[index].classList.add("box-error");
+              sharingerror_messages[index].classList.remove("hide");
+              sharingerror_messages[index].textContent =
+              "You cannot share your data with yourself.";
+            }
+            else{
               status = true;
               sharinginputboxes[index].classList.remove("box-error");
               sharingerror_messages[index].classList.add("hide");
-            doc_id = result.doc_id;
+              doc_id = result.doc_id;
+            }
           } else {
             status = false;
             sharinginputboxes[index].classList.add("box-error");
             sharingerror_messages[index].classList.remove("hide");
             sharingerror_messages[index].textContent =
-              "The Medix user you searched for is not a doctor";
-            
+            "The Medix user you searched for is not a doctor";
           }
         } catch (error) {
           console.error("Error checking email availability:", error);
@@ -125,7 +133,7 @@ function ShareData(medixID, message){
 
   document.addEventListener("DOMContentLoaded", function () {
     sharinginputs.forEach((input, input_index) => {
-  
+
         if (input.id === "sharing-doctor-input") {
             input.addEventListener("blur", () => {
                 validate_doctor(input, input_index)

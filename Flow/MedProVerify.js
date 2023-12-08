@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
             {
                 role_input.classList.add("hide");
                 role_text.required = false;
+                role_text.value = input.value;
             }
         })
     }
@@ -38,21 +39,27 @@ document.addEventListener("DOMContentLoaded", function () {
     if (input.id === "org-name-input") {
         input.addEventListener("input", function() {
           name_status = validate_name(input, input_index);
-          console.log(name_status);
         })
     }
     // Email Validation
     if (input.id === "city-input") {
-      input.addEventListener("blur", function () {
+      zip_status = 'true';
+      input.addEventListener("change", function () {
         zip_status = validateIndianPinCode(input, input_index);
-        console.log(zip_status);
       });
     }
+    //Phone validation
+    if (input.id === "phone-input") {
+        phone_status = 'true';
+        input.addEventListener("blur", function () {
+          phone_status = validate_phone(input, input_index);
+        });
+      }
   });
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission
     // Validate all fields
-    if (name_status === 'true' && zip_status === 'true') {
+    if (upload_status && name_status === 'true' && zip_status === 'true' && phone_status === 'true') {
       submit_button.classList.add("hide");
       loading_indicator.classList.remove("hide");
       sendData(); // Allow form submission
@@ -116,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
       {
         role_input.classList.add("hide");
         role_text.required = false;
-        role_input.value = input.value;
+        role_text.value = input.value;
       }
       dropdownList.style.display = "none";
     });
@@ -139,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const box = document.querySelector(".uploadbox");
     const previewContainer = document.querySelector("#previewContainer");
     const previewContainerText = document.querySelector("#previewContainer p");
-    let upload_status = false;
+    upload_status = false;
   
     imageInput.addEventListener("change", handleImageUpload);
   
@@ -156,6 +163,8 @@ document.addEventListener("DOMContentLoaded", function () {
           Message.classList.add('hide');
           previewContainer.classList.remove('hide');
           previewContainerText.textContent = file.name;
+          box.classList.remove("box-error");
+          $('#upload-msg').addClass('hide');
           upload_status = true;
         } else {
           previewContainer.classList.add('hide');
@@ -163,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
           Message.classList.add('error');
           Message.textContent = "Please upload a valid image or PDF file.";
           box.classList.add("box-error");
+          $('#upload-msg').removeClass('hide');
           upload_status = false;
         }
       } else {
@@ -171,6 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
         Message.classList.add('error');
         Message.textContent = "No files uploaded.";
         box.classList.add("box-error");
+        $('#upload-msg').removeClass('hide');
         upload_status = false;
       }
     }
@@ -238,6 +249,36 @@ function validate_name(input, index) {
     return status;
   }
 
+  function validate_phone(input, index) {
+    const phone = input.value.trim();
+  
+    // Regular expression pattern for email validation
+    const phonePattern = /^(?:\+?([0-9]{1,3}) ?)?([0-9]{10})$/;
+  
+    if (phone.length === 0) {
+      // Name field is empty
+      status = true;
+      $('#phone-msg').removeClass('hide');
+      inputboxes[index].classList.remove("box-error");
+      error_messages[index].classList.add("hide");
+    } else {
+      if (phonePattern.test(phone)) {
+        // Valid Name
+        status = true;
+        $('#phone-msg').addClass('hide');
+        inputboxes[index].classList.remove("box-error");
+        error_messages[index].classList.add("hide");
+      } else {
+        // Invalid Name
+        status = false;
+        $('#phone-msg').addClass('hide');
+        inputboxes[index].classList.add("box-error");
+        error_messages[index].classList.remove("hide");
+      }
+    }
+    return status;
+  }
+
   function validateIndianPinCode(input, index) {
     const pincode = input.value.trim();
   
@@ -246,18 +287,21 @@ function validate_name(input, index) {
   
     if (pincode.length === 0) {
       // PIN code field is empty
-      status = false;
+      status = true;
+      $('#city-msg').removeClass('hide');
       inputboxes[index].classList.remove("box-error");
       error_messages[index].classList.add("hide");
     } else {
       if (pincodePattern.test(pincode)) {
         // Valid Indian PIN code
+        $('#city-msg').addClass('hide');
         status = true;
         inputboxes[index].classList.remove("box-error");
         error_messages[index].classList.add("hide");
       } else {
         // Invalid Indian PIN code
         status = false;
+        $('#city-msg').addClass('hide');
         inputboxes[index].classList.add("box-error");
         error_messages[index].classList.remove("hide");
       }
@@ -270,21 +314,25 @@ function validate_name(input, index) {
     const role = document.getElementById('role-input').value;
     const orgName = document.getElementById('org-name-input').value;
     const city = document.getElementById('city-input').value;
-    const ID = document.getElementById('medixID').value;
+    const phone = document.getElementById('phone-input').value;
     const fileInput = document.getElementById('image');
   
     const formData = new FormData();
-    formData.append('id', ID);
     formData.append('role', role);
     formData.append('organization', orgName);
-    formData.append('city', city);
+    if (city.length == 6){
+      formData.append('city', city);
+    }
+    if (phone.length >= 10){
+      formData.append('phone', phone);
+    }
     formData.append('file', fileInput.files[0]);
   
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'PHP Modules/CreateMedPro.php', true);
     xhr.onload = function () {
         if (xhr.status === 200) {
-            displayMessage("Document securely uploaded to Medix.", 'success');
+            displayMessage('The details you entered have been saved. Please hold on till we verify the details to access your MedPro dashboard.', 'success');
             document.getElementById('form').reset();
             document.querySelectorAll(".input-box label").forEach((label)=>{
               label.classList.remove("active");
@@ -292,8 +340,11 @@ function validate_name(input, index) {
             setTimeout(()=>{
               document.getElementById("upload-status").classList.add("hide");
             },2000)
+            setTimeout(()=>{
+              window.location.href = 'home.php';
+            },1000)
         } else {
-            displayMessage("Document upload failed.", 'error');
+            displayMessage('There was an error. Please try again later.', 'error');
             document.querySelector('#upload-form input').addEventListener("focus", function(){
               document.getElementById("upload-status").classList.add("hide");
             })

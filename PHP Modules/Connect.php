@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "root";
-$database = "medix-db";
+$database = "medix";
 $pepper = "ATHALAPITHALATHAVALACHICHUKKUMARIKKANACHOOLAPPIMARIAMVANNVILAKOOTHIPHUPHUPHUHUPHUPHUPHU";
 
 // Set the SSL mode to require and verify CA certificate.
@@ -16,7 +16,7 @@ try {
     $conn = new PDO("mysql:dbname=$database;host=$servername;", $username, $password);
 } catch (PDOException $e) {
     // Redirect to the maintenance page.
-    header("Location: ../Maintenance-page/Maintenancepage.html");
+    header("Location: Maintenancepage.html");
     exit;
 }
 
@@ -25,5 +25,4 @@ function start_session(){
         session_start();
     }
 }
-
 ?>

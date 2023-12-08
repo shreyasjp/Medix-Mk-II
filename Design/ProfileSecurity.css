@@ -11,7 +11,7 @@
     margin: 0%;
     padding: 0%;
 }
-    #profile-security-header{
+#profile-security-header{
     display: flex;
     flex-direction: column;
     justify-content: left;
@@ -35,7 +35,7 @@
 #right-panel{
     justify-content: flex-start;
 }
-#delete-form, #update-form{
+#delete-form, #update-form, #new-password-form{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,6 +43,9 @@
     margin-top: 20px;
     max-width: 400px;
     gap: 10px;
+}
+#new-password-form{
+    width: 400px;
 }
 #delete-form h1, #update-form h1{
     display: flex;
@@ -53,16 +56,16 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
-#delete-form,#update-form .input-box{
+#delete-form,#update-form,#new-password-form .input-box{
     display: flex;
     margin: 0;
 }
-#delete-form, #update-from .error{
+#delete-form, #update-from, #new-password-form .error{
     width: 100%;
     margin: 0;
     text-align: left;
 }
-#delete-form button, #update-form button{
+#delete-form button, #update-form button, #new-password-form button{
     margin-top: 10px;
     color: #ffffff;
     border: 0;
@@ -95,5 +98,30 @@
 #change-password{
     margin-top: 30px !important;
 }
-
-
+@media (max-width: 1023px){
+    #profile-security-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #profile-security-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #profile-security-header{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #profile-security-content form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}

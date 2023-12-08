@@ -102,7 +102,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 </head>
 
 <body class="light">
-  <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
+  <img id="page-loader" class="hide" src="Data/Animations/SpinnerMedium.svg">
   <nav class="hide">
     <div class="nav-content">
       <a href="home.php" class="logo">
@@ -153,9 +153,9 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
           </div>
           <div id="profile-link">
             <a class="profile-link active-text" id="profile-info-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-info', this)">Personal Information</a>
-            <a class="profile-link" id="profile-security-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-security', this)">Sign-In and Security</a>
+            <!--<a class="profile-link" id="profile-security-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-security', this)">Sign-In and Security</a>
             <a class="profile-link" id="profile-edit-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-edit', this)">Edit Info</a>
-            <a class="profile-link" id="profile-privacy-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-privacy', this)">Privacy</a>
+            <a class="profile-link" id="profile-privacy-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-privacy', this)">Privacy</a>-->
           </div>
         </div>
         <div id="right-panel">
@@ -261,7 +261,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
                   <input type="password" name="password" id="new-password-input" spellcheck="false" autocapitalize="off"
                     autocomplete="off" aria-autocomplete="off" aria-required="true" required />
                   <label for="new-password-input" id="new-password-label">Password</label>
-                  <p id="password-input-visibility-toggle" class="password-visibility-toggle">SHOW</p>
+                  <p id="new-password-input-visibility-toggle" class="password-visibility-toggle">SHOW</p>
                 </div>
                 <div id="new-password-strength-validation-box" class="hide">
                   <p id="new-password-validation-heading" class="password-validation-heading">
@@ -301,9 +301,12 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
                 <p class="error hide" id="new-password-confirmation-error">
                   <span class="error-symbol">🛈</span> Passwords do not match.
                 </p>
+                <button id="new-password-form-submit-button">Continue</button>
+                <img id="new-password-submit-loader" class="hide" src="Data/Animations/SpinnerSmall.svg">
               </form>
               <script type="text/javascript" src="Flow/AccountDelete.js"></script>
               <script type="text/javascript" src="Flow/ChangePassword.js"></script>
+              <script type="text/javascript" src="Flow/Validations.js"></script>
             </div>
           </section>
         </div>
@@ -606,6 +609,12 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 </section>
 
   </div>
+  <noscript>
+    <div style="box-sizing: bordeborder-box; text-align: center; margin: 30px; padding: 20px; background-color: #ffdcdc; border: 1px solid red; border-radius: 5px;">
+      <p>This website requires JavaScript to function. Please enable JavaScript in your browser settings to view this page.</p>
+    </div>
+  </noscript>
+  <script type="text/javascript">document.getElementById('page-loader').classList.remove('hide');</script>
   <script type="text/javascript" src="Flow/Session.js"></script>
   <script type="text/javascript" src="Flow/ThemeSelector.js"></script>
   <script type="text/javascript" src="Flow/InputLabelHandling.js"></script>

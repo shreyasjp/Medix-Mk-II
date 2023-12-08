@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="Design/Bootstrap/LandingPage/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="Design/Bootstrap/LandingPage/css/animate.min.css">
     <link rel="stylesheet" href="Design/Bootstrap/LandingPage/css/custom.css">
+    <style type="text/css">
+        .hide {
+            display: none;
+        }
+    </style>
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -40,7 +45,7 @@
 </head>
 
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="77" style="font-family: Montserrat, sans-serif;">
-    <div id="custom-container">
+    <div id="custom-container" class="hide">
     <nav class="navbar navbar-expand-md fixed-top navbar-light" id="mainNav" style="background: #242424; border: none; padding: 0px 0px;width: 100vw;">
         <div class="container"><img width="20" height="20" src="Data/Favicon/android-chrome-384x384.png" style="border-radius: 5px;margin-right: 7px; margin-bottom: 1px; border-style: none;"><a id="brand-name" class="navbar-brand" href="#" style="font-size: 14px; font-weight: 100 !important; font-family: Montserrat, sans-serif;color: #dedede; padding-right: 0px;">Medix</a><button data-bs-toggle="collapse" class="navbar-toggler border rounded navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu" style="border: none !important;border-radius: 5px;padding: 5px;width: 25px;height: 25px;background: #242424 !important;font-family: Montserrat, sans-serif;"><i class="fa fa-bars" style="color: #6e6d6d;"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -80,7 +85,7 @@
         <div id="MedPro-Search-box" class="container d-flex flex-column justify-content-center align-items-center">
             <div class="col-lg-8 mx-auto">
                 <h1 style="color: #242424;font-family: Montserrat, sans-serif; text-transform: none;">Find <span class="medpro" >a MedPro</span></h1>
-                <p style="color: #242424;font-family: Montserrat, sans-serif;">Effortlessly locate healthcare experts in your vicinity.</p><button class="btn btn-primary btn-lg btn-default" data-bss-hover-animate="pulse" type="button" style="background: #242424;border-style: none;color: #f9f9f9;font-family: Montserrat, sans-serif;border-radius: 30px;padding-right: 19px;padding-left: 19px; text-transform: none; font-size: 16px !important;" onclick="window.location.href='MedProSearch.html'">Search</button>
+                <p style="color: #242424;font-family: Montserrat, sans-serif;">Effortlessly locate healthcare experts in your vicinity.</p><button class="btn btn-primary btn-lg btn-default" data-bss-hover-animate="pulse" type="button" style="background: #242424;border-style: none;color: #f9f9f9;font-family: Montserrat, sans-serif;border-radius: 30px;padding-right: 19px;padding-left: 19px; text-transform: none; font-size: 16px !important;" onclick="window.location.href='javascript:void(0);'">Coming Soon</button>
             </div>
         </div>
     </section>
@@ -105,9 +110,14 @@
     </section>
     <div class="map-clean"></div>
     </div>
+    <noscript>
+        <div style="display: flex; width: 100%; height: 100%; justify-content: center; align-items: center;"><div style="color:black; box-sizing: bordeborder-box; text-align: center; margin: 30px; padding: 20px; background-color: #ffdcdc; border: 1px solid red; border-radius: 5px;">
+            <p style="padding: 0%; margin: 0%;">This website requires JavaScript to function. Please enable JavaScript in your browser settings to view this page.</p>
+        </div></div>
+    </noscript>
+    <script type="text/javascript">document.getElementById('custom-container').classList.remove('hide');</script>
     <script src="Design/Bootstrap/LandingPage/bootstrap/js/bootstrap.min.js"></script>
     <script src="Design/Bootstrap/LandingPage/js/bs-init.js"></script>
     <script src="Design/Bootstrap/LandingPage/js/grayscale.js"></script>
 </body>
-
 </html>

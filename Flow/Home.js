@@ -28,7 +28,7 @@ function changePasswordButton() {
     $('#update-form label').removeClass('active');
     $('#new-password-form label').removeClass('active');
   
-    // Hide and show elements
+    // Hide and show element
     document.getElementById('delete-form').classList.add('hide');
     document.getElementById('update-form').classList.remove('hide');
   
@@ -47,6 +47,7 @@ function changePasswordButton() {
   
     // Hide and show elements
     document.getElementById('update-form').classList.add('hide');
+    document.getElementById('new-password-form').classList.add('hide');
     document.getElementById('delete-form').classList.remove('hide');
   
     // Update the active state of buttons
@@ -76,4 +77,28 @@ function changePasswordButton() {
         $('#patient-id').removeClass('filter-active');
         $(button).children('.patient-id-icon').find('img').attr('src', 'Data/Icons/Copy.png');
     }, 2000);
+  }
+  
+    function copyEmailToClipboard(button) {
+      var textToCopy = $('#email').text().trim();
+      var tempInput = $('<input>');
+      $('body').append(tempInput);
+      tempInput.val(textToCopy).select();
+      document.execCommand('copy');
+      tempInput.remove();
+  
+      // Change the icon and show the confirmation message
+      $(button).children('.patient-id-icon').find('img').attr('src', 'Data/Icons/Copy.png');
+      $('#real-content').addClass('hide');
+      $('#copied-message').removeClass('hide');
+      $('#patient-id').addClass('filter-active');
+  
+  
+      // Revert back to the actual patient ID after 3 seconds
+      setTimeout(function() {
+          $('#copied-message').addClass('hide');
+          $('#real-content').removeClass('hide');
+          $('#patient-id').removeClass('filter-active');
+          $(button).children('.patient-id-icon').find('img').attr('src', 'Data/Icons/Copy.png');
+      }, 2000);
 }

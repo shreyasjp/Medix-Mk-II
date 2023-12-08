@@ -69,10 +69,19 @@ function ShareData(medixID, docID){
         try {
           const result = await user_check(medixid);
           if (result.exists) {
+            if (result.sameUserError){
+                status = false;
+                sharinginputboxes[index].classList.add("box-error");
+                sharingerror_messages[index].classList.remove("hide");
+                sharingerror_messages[index].textContent =
+                "You cannot share a document with yourself.";
+            }
+            else{
             status = true;
             sharinginputboxes[index].classList.remove("box-error");
             sharingerror_messages[index].classList.add("hide");
             doc_id = result.id;
+            }
           } else {
             status = false;
             sharinginputboxes[index].classList.add("box-error");

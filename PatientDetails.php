@@ -10,7 +10,7 @@ if (!isset($_SESSION['MedProID'])){
   exit();
 }else{
   $MedProID = $_SESSION['MedProID'];
-  $query = "SELECT * FROM `medix-medical-personnel` WHERE medpro_id = :id";
+  $query = "SELECT * FROM `medix-medical-personnel` WHERE mx_id = :id";
   $stmt = $conn->prepare($query);
   $stmt->bindParam(':id', $MedProID);
   $stmt->execute();
@@ -114,7 +114,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 </head>
 
 <body class="light">
-  <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
+  <img id="page-loader" class="hide" src="Data/Animations/SpinnerMedium.svg">
   <div id="container" class="hide">
   <h1 style="font-size: 36px;" class="<?php echo $access?'hide':''; ?>">You do not have access to this page.</h1>
       <div id="profile-content" class="section-content <?php echo !$access?'hide':''; ?>">
@@ -343,6 +343,12 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 
       </div>
           </div>
+<noscript>
+  <div style="box-sizing: bordeborder-box; text-align: center; margin: 30px; padding: 20px; background-color: #ffdcdc; border: 1px solid red; border-radius: 5px;">
+    <p>This website requires JavaScript to function. Please enable JavaScript in your browser settings to view this page.</p>
+  </div>
+</noscript>
+<script type="text/javascript">document.getElementById('page-loader').classList.remove('hide');</script>
 <script type="text/javascript" src="Flow/Session.js"></script>
 <script type="text/javascript" src="Flow/ThemeSelector.js"></script>
   <script type="text/javascript" src="Flow/Home.js"></script>

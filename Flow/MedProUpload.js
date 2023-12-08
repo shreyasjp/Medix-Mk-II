@@ -32,6 +32,14 @@ $(document).ready(function () {
       fetchPatientMedixID(patientID)
       .then((response) => {
         if (response.exists) {
+          if (response.sameUserError){
+            $("#patient-id-error").removeClass("hide");
+            $('#upload-id-box').addClass("box-error");
+            $("#patient-id-error").text("Self uploads are not allowed to prevent forgery.");
+            $('#patient-info-form-submit-button').removeClass("hide");
+            $('#patient-info-submit-loader').addClass("hide");
+          }
+          else{
           $('#patient-info-display').removeClass("hide");
           $("#patient-name-display").text(response.name);
           $("#patient-age-display").text('Age: ' + response.age);
@@ -40,6 +48,7 @@ $(document).ready(function () {
           $('#patient-info-form-submit-button').val("Continue");
           $('#patient-info-form-submit-button').removeClass("hide");
           $('#patient-info-submit-loader').addClass("hide");
+          }
         } else {
           $("#patient-id-error").removeClass("hide");
           $('#upload-id-box').addClass("box-error");
@@ -60,6 +69,14 @@ $(document).ready(function () {
       fetchPatientPatientID(patientID)
         .then((response) => {
           if (response.exists) {
+            if (response.sameUserError ){
+              $("#patient-id-error").removeClass("hide");
+              $('#upload-id-box').addClass("box-error");
+              $("#patient-id-error").text("Self uploads are not allowed to prevent forgery.");
+              $('#patient-info-form-submit-button').removeClass("hide");
+              $('#patient-info-submit-loader').addClass("hide");
+            }
+            else{
             $('#patient-info-display').removeClass("hide");
             $("#patient-name-display").text(response.name);
             $("#patient-age-display").text('Age: ' + response.age);
@@ -68,6 +85,7 @@ $(document).ready(function () {
             $('#patient-info-form-submit-button').val("Continue");
             $('#patient-info-form-submit-button').removeClass("hide");
             $('#patient-info-submit-loader').addClass("hide");
+            }
           } else {
             $("#patient-id-error").removeClass("hide");
             $('#upload-id-box').addClass("box-error");

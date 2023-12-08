@@ -5,6 +5,7 @@ const inputs = document.querySelectorAll(".input-box input");
 const labels = document.querySelectorAll(".input-box label");
 const error_messages = document.querySelectorAll(".error");
 const submit_button = document.getElementById("form-submit-button");
+const loader = document.getElementById('submit-loader');
 
 // Main()
 document.addEventListener("DOMContentLoaded", function () {
@@ -30,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission
+    submit_button.classList.add('hide'); // Hide submit button
+    loader.classList.remove('hide'); // Show loader
   
     // Validate all fields
     if (age_status === "true" && height_status === "true" && document.getElementById("blood-group-input").value !== '' && weight_status === "true") {
@@ -39,6 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
       if (maleButton.checked || femaleButton.checked) {
         form.submit(); // Submit the form if a gender option is selected
+        submit_button.classList.remove('hide'); // Hide submit button
+        loader.classList.add('hide'); // Show loader
       }
     }
   });

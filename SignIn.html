@@ -47,7 +47,7 @@
     <meta name="theme-color" content="#000000" />
   </head>
   <body class="light">
-    <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
+    <img id="page-loader" class="hide" src="Data/Animations/SpinnerMedium.svg">
     <div id="container" class="hide">
         <div id="header">
             <img id="logo" src="Data/MEDiqo.png">
@@ -124,12 +124,12 @@
             </label>
             <input type="submit" class="submit" id="form-submit-button" value="Continue" />
             <img id="submit-loader" class="hide" src="Data/Animations/SpinnerSmall.svg">
-            <a
+            <!--<a
                 href="ForgotPassword.html"
                 target="_blank" id="fgpswd"
                 >Forgot password?
                 <span class="symbol">🡥</span></a
-              >
+              >-->
             <p class="message">
               Don't have a Medix ID?
               <a href="SignUp.html" target="_blank"
@@ -138,6 +138,12 @@
             </p>
           </form>
     </div>
+    <noscript>
+      <div style="box-sizing: bordeborder-box; text-align: center; margin: 30px; padding: 20px; background-color: #ffdcdc; border: 1px solid red; border-radius: 5px;">
+          <p>This website requires JavaScript to function. Please enable JavaScript in your browser settings to view this page.</p>
+      </div>
+    </noscript>
+    <script type="text/javascript">document.getElementById('page-loader').classList.remove('hide');</script>
     <script type="text/javascript" src="Flow/Session.js"></script>  
     <script type="text/javascript" src="Flow/ThemeSelector.js"></script>
     <script type="text/javascript" src="Flow/Validations.js"></script>

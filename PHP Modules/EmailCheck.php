@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+start_session();
 $email = $_POST['email'];
 
 $sql = "SELECT * FROM `medix-users` WHERE email = :email";
@@ -17,6 +18,12 @@ if ($stmt->rowCount() > 0) {
 $response = array('exists' => $exists);
 if ($exists) {
     $response['id'] = $id;
+    if($id == $_SESSION['id']){
+        $response['sameUserError'] = true;
+    }
+    else{
+        $response['sameUserError'] = false;
+    }
 }
 header('Content-Type: application/json');
 echo json_encode($response);

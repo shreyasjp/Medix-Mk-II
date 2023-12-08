@@ -43,7 +43,7 @@ if (isset($_FILES["file"])) {
         $stmt->bindParam(':description', $documentDescription);
         $stmt->bindParam(':file_path', $targetFile);
         $stmt->bindParam(':file_extension', $fileExtension);
-        $stmt->bindParam(':owner', $uploaded_by);
+        $stmt->bindParam(':owner', $owner);
         $stmt->bindParam(':uploaded_by', $uploaded_by);
         $stmt->bindParam(':is_verified', $is_verified);
         

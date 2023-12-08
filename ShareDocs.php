@@ -34,7 +34,7 @@ $ID = $_GET['docID'];
 </head>
 
 <body class="light">
-  <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
+  <img id="page-loader" class="hide" src="Data/Animations/SpinnerMedium.svg">
   <section id="sharing">
   <div id="container">
     <div id="sharing-header">
@@ -63,6 +63,12 @@ $ID = $_GET['docID'];
         </form>
     </div>
     </section>
+    <noscript>
+      <div style="box-sizing: bordeborder-box; text-align: center; margin: 30px; padding: 20px; background-color: #ffdcdc; border: 1px solid red; border-radius: 5px;">
+        <p>This website requires JavaScript to function. Please enable JavaScript in your browser settings to view this page.</p>
+      </div>
+    </noscript>
+    <script type="text/javascript">document.getElementById('page-loader').classList.remove('hide');</script>
     <script type="text/javascript" src="Flow/Session.js"></script>
     <script type="text/javascript" src="Flow/ThemeSelector.js"></script>
     <script type="text/javascript" src="Flow/InputLabelHandling.js"></script>

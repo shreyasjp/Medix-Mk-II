@@ -247,6 +247,8 @@
         border-radius: 5px;
         width: max-content;
         height: max-content;
+        word-wrap: break-word;
+        white-space: pre-wrap;
       }
       .light #upload-previewContainer{
         background-color: var(--light-secondary-color);

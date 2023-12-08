@@ -19,11 +19,11 @@ if ($stmt->rowCount() <= 0){
 else{
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   if(!$row['verification_status']){
-    header('Location: MedProVerify.php');
+    header('Location: MedProStatus.php');
     exit();
   }
   else{
-    $_SESSION['MedProID'] = $row['medpro_id'];
+    $_SESSION['MedProID'] = $row['mx_id'];
     if($row['role'] != "Medical Doctor"){
       $isDoc = false;
     }
@@ -37,6 +37,8 @@ if (!isset($_SESSION['MedProID'])){
     header('Location: MedProVerify.php');
     exit();
 }
+
+$mid = $_SESSION['MedProID'];
 
 function getAgeGroup($age) {
   if ($age <= 1) {
@@ -86,6 +88,16 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 
 }
 
+$query = "SELECT * FROM `medix-medical-personnel` WHERE mx_id = :id";
+$stmt = $conn->prepare($query);
+$stmt->bindParam(':id', $id);
+$stmt->execute();
+$roww = $stmt->fetch(PDO::FETCH_ASSOC);
+$Role = $roww['role'];
+$Org = $roww['organization'];
+$ZIP = $roww['city'];
+$Phn = $roww['phone'];
+
 ?>
 
 <!DOCTYPE html>
@@ -124,7 +136,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 </head>
 
 <body class="light">
-  <img id="page-loader" src="Data/Animations/SpinnerMedium.svg">
+  <img id="page-loader" class="hide" src="Data/Animations/SpinnerMedium.svg">
   <nav class="hide">
     <div class="nav-content">
       <a href="index.php" class="logo">
@@ -169,14 +181,8 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
             <h3 id="email">
               <?php echo $medixID; ?>
               </h2>
-              <button id="patient-id" onclick="copyToClipboard(this);"><span id="real-content"><?php echo $patientID?><span class="patient-id-icon"><img
+              <button id="patient-id" onclick="copyEmailToClipboard(this);"><span id="real-content">Copy to clipboard<span class="patient-id-icon"><img
                 src="Data/Icons/Copy.png"></span></span><span class="filter-active hide" id="copied-message">Copied to clipboard</span></button>
-          </div>
-          <div id="profile-link">
-            <a class="profile-link active-text" id="profile-info-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-info', this)">Personal Information</a>
-            <a class="profile-link" id="profile-security-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-security', this)">Sign-In and Security</a>
-            <a class="profile-link" id="profile-edit-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-edit', this)">Edit Info</a>
-            <a class="profile-link" id="profile-privacy-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-privacy', this)">Privacy</a>
           </div>
         </div>
         <div id="right-panel">
@@ -186,39 +192,32 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
             </div>
             <div id="info-box-container">
               <button id="age-box" class="info-box">
-                <h3 id="age-heading" class="info-title">Age<span class="info-icons"><img
-                      src="Data/Icons/Age.png"></span></h3>
+                <h3 id="age-heading" class="info-title">Role<span class="info-icons"><img
+                      src="Data/Icons/Doctor.png"></span></h3>
                 <p id="age" class="info-value">
-                  <?php echo $age; ?>
+                  <?php echo $Role; ?>
                 </p>
               </button>
               <button id="gender-box" class="info-box">
-                <h3 id="gender-heading" class="info-title">Gender<span class="info-icons"><img
-                      src="Data/Icons/Gender.png"></span></h3>
+                <h3 id="gender-heading" class="info-title">Organization<span class="info-icons"><img
+                      src="Data/Icons/Organization.png"></span></h3>
                 <p id="gender" class="info-value">
-                  <?php echo $gender; ?>
+                  <?php echo $Org; ?>
                 </p>
               </button>
               <button id="height-box" class="info-box">
-                <h3 id="height-heading" class="info-title">Height<span class="info-icons"><img
-                      src="Data/Icons/Height.png"></span></h3>
+                <h3 id="height-heading" class="info-title">ZIP Code<span class="info-icons"><img
+                      src="Data/Icons/Location.png"></span></h3>
                 <p id="height" class="info-value">
-                  <?php echo $height; ?> cm
+                  <?php echo $ZIP; ?>
                 </p>
               </button>
               <button id="weight-box" class="info-box">
-                <h3 id="weight-heading" class="info-title">Weight<span class="info-icons"><img
-                      src="Data/Icons/Weight.png"></span></h3>
+                <h3 id="weight-heading" class="info-title">Contact<span class="info-icons"><img
+                      src="Data/Icons/Phone.png"></span></h3>
                 <p id="weight" class="info-value">
-                  <?php echo $weight; ?> Kg
+                  <?php echo $Phn; ?>
                 </p>
-                <button id="blood-group-box" class="info-box">
-                  <h3 id="blood-group-heading" class="info-title">Blood Group<span class="info-icons"><img
-                        src="Data/Icons/BloodGroup.png"></span></h3>
-                  <p id="blood-group" class="info-value">
-                    <?php echo $bloodGroup; ?>
-                  </p>
-                </button>
             </div>
           </section>
   <section id="upload" class="sections hide">
@@ -459,6 +458,12 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 </section>
 
   </div>
+<noscript>
+  <div style="box-sizing: bordeborder-box; text-align: center; margin: 30px; padding: 20px; background-color: #ffdcdc; border: 1px solid red; border-radius: 5px;">
+    <p>This website requires JavaScript to function. Please enable JavaScript in your browser settings to view this page.</p>
+  </div>
+</noscript>
+<script type="text/javascript">document.getElementById('page-loader').classList.remove('hide');</script>
 <script type="text/javascript" src="Flow/Session.js"></script>
 <script type="text/javascript" src="Flow/ThemeSelector.js"></script>
 <script type="text/javascript" src="Flow/InputLabelHandling.js"></script>
@@ -466,7 +471,6 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 <script type="text/javascript" src="Flow/NavBar.js"></script>
   <script type="text/javascript" src="Flow/Home.js"></script>
   <script type="text/javascript" src="Flow/PatientManage.js"></script>
-  <script type="text/javascript" src="Flow/Profile.js"></script>
 </body>
 </html>
 
