@@ -16,6 +16,10 @@
         .hide {
             display: none;
         }
+        body{
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
     </style>
     <link
       rel="apple-touch-icon"
@@ -47,12 +51,12 @@
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="77" style="font-family: Montserrat, sans-serif;">
     <div id="custom-container" class="hide">
     <nav class="navbar navbar-expand-md fixed-top navbar-light" id="mainNav" style="background: #242424; border: none; padding: 0px 0px;width: 100vw;">
-        <div class="container"><img width="20" height="20" src="Data/Favicon/android-chrome-384x384.png" style="border-radius: 5px;margin-right: 7px; margin-bottom: 1px; border-style: none;"><a id="brand-name" class="navbar-brand" href="#" style="font-size: 14px; font-weight: 100 !important; font-family: Montserrat, sans-serif;color: #dedede; padding-right: 0px;">Medix</a><button data-bs-toggle="collapse" class="navbar-toggler border rounded navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu" style="border: none !important;border-radius: 5px;padding: 5px;width: 25px;height: 25px;background: #242424 !important;font-family: Montserrat, sans-serif;"><i class="fa fa-bars" style="color: #6e6d6d;"></i></button>
+        <div class="container"><img width="20" height="20" src="Data/Favicon/android-chrome-384x384.png" style="border-radius: 5px;margin-right: 7px; margin-bottom: 1px; border-style: none;"><a id="brand-name" class="navbar-brand" href="#" style="font-size: 14px; font-weight: 900 !important; font-family: Montserrat, sans-serif;color: #dedede; padding-right: 0px;">Medix</a><button data-bs-toggle="collapse" class="navbar-toggler border rounded navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu" style="border: none !important;border-radius: 5px;padding: 5px;width: 25px;height: 25px;background: #242424 !important;font-family: Montserrat, sans-serif;"><i class="fa fa-bars" style="color: #6e6d6d;"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav justify-content-center align-items-center ms-auto">
                     <li class="nav-item nav-link"><a class="nav-link active" data-bss-hover-animate="pulse" href="#about" style="padding: 5px; color: #dedede; font-family: Montserrat, sans-serif; text-transform: none;">About</a></li>
-                    <li class="nav-item nav-link"><a class="nav-link" data-bss-hover-animate="pulse" href="#MedPro-search" style="padding: 3px; color: #dedede;font-family: Montserrat, sans-serif; text-transform: none;">Find a MedPro</a></li>
                     <li class="nav-item nav-link"><a class="nav-link" data-bss-hover-animate="pulse" href="#support" style="padding: 3px; color: #dedede;font-family: Montserrat, sans-serif; text-transform: none;">Support</a></li>
+                    <li class="nav-item nav-link"><a class="nav-link" data-bss-hover-animate="pulse" href="SignIn.html" style="padding: 3px; color: #dedede;font-family: Montserrat, sans-serif; text-transform: none;">Sign In</a></li>
                 </ul>
             </div>
         </div>
@@ -81,25 +85,17 @@
             </div>
         </div>
     </section>
-    <section class="text-center d-flex flex-column justify-content-center align-items-center download-section content-section" id="MedPro-search" style="background: #f9f9f9;height: 50vh;">
-        <div id="MedPro-Search-box" class="container d-flex flex-column justify-content-center align-items-center">
-            <div class="col-lg-8 mx-auto">
-                <h1 style="color: #242424;font-family: Montserrat, sans-serif; text-transform: none;">Find <span class="medpro" >a MedPro</span></h1>
-                <p style="color: #242424;font-family: Montserrat, sans-serif;">Effortlessly locate healthcare experts in your vicinity.</p><button class="btn btn-primary btn-lg btn-default" data-bss-hover-animate="pulse" type="button" style="background: #242424;border-style: none;color: #f9f9f9;font-family: Montserrat, sans-serif;border-radius: 30px;padding-right: 19px;padding-left: 19px; text-transform: none; font-size: 16px !important;" onclick="window.location.href='javascript:void(0);'">Coming Soon</button>
-            </div>
-        </div>
-    </section>
-    <section class="text-center d-flex flex-column justify-content-center align-items-center content-section" id="support" style="background: #282828;height: 50vh;">
+    <section class="text-center d-flex flex-column justify-content-center align-items-center content-section" id="support" style="background: #f9f9f9;height: 100vh;">
         <div id="support-box" class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <h2 style="font-family: Montserrat, sans-serif; text-transform: none;">Support</h2>
-                    <p style="font-family: Montserrat, sans-serif;">Give us a few details and we’ll offer the best solution.&nbsp;</p>
+                    <h2 style="color: #242424; font-family: Montserrat, sans-serif; text-transform: none;">Support</h2>
+                    <p style="color: #242424; font-family: Montserrat, sans-serif;">Give us a few details and we’ll offer the best solution.&nbsp;</p>
                     <ul class="list-inline banner-social-buttons">
                         <li class="list-inline-item">
                             <a href="mailto:medix.mailer@gmail.com">
-                              <button class="btn btn-primary btn-lg btn-default" data-bss-hover-animate="pulse" type="button" style="background: #f9f9f9; border-style: none; padding-right: 17px; padding-left: 17px; border-radius: 35px;">
-                                <span class="network-name" style="font-family: Montserrat, sans-serif; font-size: 16px; color: #242424; font-weight: 600; text-transform: none;">Mail Us</span>
+                              <button class="btn btn-primary btn-lg btn-default" data-bss-hover-animate="pulse" type="button" style="background: #282828; border-style: none; padding-right: 17px; padding-left: 17px; border-radius: 35px;">
+                                <span class="network-name" style="font-family: Montserrat, sans-serif; font-size: 16px; color: #f9f9f9; font-weight: 600; text-transform: none;">Mail Us</span>
                               </button>
                             </a>
                           </li>

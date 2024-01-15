@@ -153,8 +153,8 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
           </div>
           <div id="profile-link">
             <a class="profile-link active-text" id="profile-info-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-info', this)">Personal Information</a>
-            <!--<a class="profile-link" id="profile-security-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-security', this)">Sign-In and Security</a>
-            <a class="profile-link" id="profile-edit-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-edit', this)">Edit Info</a>
+            <a class="profile-link" id="profile-security-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-security', this)">Sign-In and Security</a>
+            <!--<a class="profile-link" id="profile-edit-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-edit', this)">Edit Info</a>
             <a class="profile-link" id="profile-privacy-link" href="javascript:void(0);" onclick="showSubSection('profile', 'profile-privacy', this)">Privacy</a>-->
           </div>
         </div>
@@ -250,7 +250,7 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
                     autocomplete="off" aria-autocomplete="off" aria-required="true" required />
                 </div>
                 <p id="update-password-error" class="error  hide">
-                  <span class="error-symbol">🛈</span> The password you entered is incorrect.Please double-check your
+                  <span class="error-symbol">🛈</span> The password you entered is incorrect. Please double-check your
                   password.
                 </p>
                 <button id="update-account-button">Continue</button>
@@ -300,6 +300,9 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
                 </div>
                 <p class="error hide" id="new-password-confirmation-error">
                   <span class="error-symbol">🛈</span> Passwords do not match.
+                </p>
+                <p class="error hide" id="new-password-repeat-error">
+                  <span class="error-symbol">🛈</span> This password was used recently. Please choose a different password..
                 </p>
                 <button id="new-password-form-submit-button">Continue</button>
                 <img id="new-password-submit-loader" class="hide" src="Data/Animations/SpinnerSmall.svg">
@@ -502,7 +505,10 @@ $profilePic = isset($row['profile_pic_location']) ? "Medix Mk II/".$row['profile
 
       <div id="docs-container">
         <?php if ($NoDocs) {
-          echo "<p>There are no uploads</p>";
+          echo "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center'>";
+          echo "<p>There are no uploads.</p>";
+          echo "<p>Can't find your document? Try refreshing the page.</p>";
+          echo "</div>";
         }
         foreach ($docs as $doc): ?>
           <?php

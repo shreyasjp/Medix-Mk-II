@@ -28,7 +28,7 @@
 }
 
 /* When the checkbox is checked, add a blue background */
-.light #checkbox input:checked ~ .checkmark {
+.light .checkbox input:checked ~ .checkmark {
     background: #0071e3;
     border: 1px solid #0071e3;
 }

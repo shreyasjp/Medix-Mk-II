@@ -11,12 +11,12 @@ $blood_group = $_POST['blood-group'];
 $gender = $_POST['gender'];
 $true = 1;
 
-if (isset($_FILES["Image"])) {
+if (isset($_FILES["Image"]) && $_FILES["Image"]["error"] != UPLOAD_ERR_NO_FILE) {
     $file = $_FILES["Image"];
-    
+
     // Generate a unique filename
     $uniqueFilename = uniqid() . "_" . $file["name"];
-    
+
     // Move the uploaded file to a desired directory
     $uploadDir = "../ProfileImages/"; // Change this to your desired upload directory
     $targetFile = $uploadDir . $uniqueFilename;
@@ -35,20 +35,18 @@ if (isset($_FILES["Image"])) {
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':profile_pic', $file_path);
         $stmt->bindParam(':completion_status', $true);
-        if ($stmt->execute()){
+        if ($stmt->execute()) {
             header('Location: ../home.php');
             exit;
-        } else{
+        } else {
             header('Location: ../index.php');
             exit;
         }
-    }
-    else{
+    } else {
         header('Location: ../index.php');
         exit;
     }
-}
-else{
+} else {
     // Insert the data into the database.
     $sql = "INSERT INTO `medix-user-profile` (mx_id, age, height, weight, blood_group, gender, completion_status) VALUES (:mx_id, :age, :height, :weight, :blood_group, :gender, :completion_status)";
     $stmt = $conn->prepare($sql);
@@ -59,14 +57,12 @@ else{
     $stmt->bindParam(':blood_group', $blood_group);
     $stmt->bindParam(':gender', $gender);
     $stmt->bindParam(':completion_status', $true);
-    if ($stmt->execute()){
+    if ($stmt->execute()) {
         header('Location: ../home.php');
         exit;
-    }
-    else{
+    } else {
         header('Location: ../index.php');
         exit;
     }
 }
-
 ?>

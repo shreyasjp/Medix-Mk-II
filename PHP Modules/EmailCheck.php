@@ -18,11 +18,13 @@ if ($stmt->rowCount() > 0) {
 $response = array('exists' => $exists);
 if ($exists) {
     $response['id'] = $id;
-    if($id == $_SESSION['id']){
-        $response['sameUserError'] = true;
-    }
-    else{
-        $response['sameUserError'] = false;
+    if(isset($_SESSION['id'])){
+        if($id == $_SESSION['id']){
+            $response['sameUserError'] = true;
+        }
+        else{
+            $response['sameUserError'] = false;
+        }
     }
 }
 header('Content-Type: application/json');

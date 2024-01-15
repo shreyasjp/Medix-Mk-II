@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function(){
       // Password Strength Validation
       if (input.id === "new-password-input") {
         password_strength_display.classList.remove("hide");
+        error_messages[6].classList.add("hide");
       }
     });
 
@@ -110,12 +111,12 @@ document.addEventListener('DOMContentLoaded', function(){
       input.addEventListener("keyup", function() {
         if (input.value === document.getElementById("new-password-input").value){
           inputboxes[input_index].classList.remove("box-error");
-          error_messages[input_index].classList.add("hide");
+          error_messages[input_index+1].classList.add("hide");
           password_confirmation_status = true;
         }
         else{
           inputboxes[input_index].classList.add("box-error");
-          error_messages[input_index].classList.remove("hide");
+          error_messages[input_index+1].classList.remove("hide");
           password_confirmation_status = false;
         }
       })
@@ -126,12 +127,12 @@ document.addEventListener('DOMContentLoaded', function(){
       input.addEventListener("change", function() {
         if (input.value === document.getElementById("new-password-confirmation-input").value){
           inputboxes[input_index+1].classList.remove("box-error");
-          error_messages[input_index+1].classList.add("hide");
+          error_messages[input_index+2].classList.add("hide");
           password_confirmation_status = true;
         }
         else{
           inputboxes[input_index+1].classList.add("box-error");
-          error_messages[input_index+1].classList.remove("hide");
+          error_messages[input_index+2].classList.remove("hide");
           password_confirmation_status = false;
         }
       })
@@ -146,10 +147,41 @@ document.addEventListener('DOMContentLoaded', function(){
     if (password_validation_status === "true" && password_confirmation_status) {
       submit_button.classList.add("hide");
       loading_indicator.classList.remove("hide");
-      UpdatePassword(document.getElementById("new-password-input").value);
-
+      if(!UpdatePassword(document.getElementById("new-password-input").value)){
+        error_messages[6].classList.remove("hide");
+        submit_button.classList.remove("hide");
+        loading_indicator.classList.add("hide");
+        form.reset();
+      }
     }
   });
 
 })
+
+function UpdatePassword(password) {
+  const login_endpoint = "PHP Modules/UpdatePassword.php";
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", login_endpoint, true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.sameAsBefore) {
+          return false;
+        } else if (response.success) {
+          $('#new-password-form').addClass('hide');
+          $('#new-password-repeat-error').addClass('hide');
+          window.location.href = "index.php";
+        } else {
+          console.error("Unexpected response from server");
+        }
+      } else {
+        console.error("Failed to make the request to the server");
+      }
+    }
+  };
+
+  xhr.send("password=" + encodeURIComponent(password));
+}
 

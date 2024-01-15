@@ -1,11 +1,14 @@
 <?php
 session_start();
+
 // Generate CAPTCHA
-if (mt_rand(0, 1)) {
+/* if (mt_rand(0, 1)) {
     $captchaData = generateText();
 } else {
     $captchaData = generateMath();
-}
+} */
+
+$captchaData = generateText();
 
 $expectedResult = $captchaData['expectedResult'];
 $a = $captchaData['a'];

@@ -1,11 +1,32 @@
 <?php
 require_once 'Connect.php';
+start_session();
 
 // Assuming that you have a valid session or token-based authentication in place.
 
 // Sanitize and validate the form inputs.
 $id = $_SESSION['id'];
 $password = $_POST['password'];
+
+// Check if the new password is the same as the old password
+$sqlCheckPassword = "SELECT password, salt FROM `medix-users` WHERE mx_id = :medixId";
+$stmtCheckPassword = $conn->prepare($sqlCheckPassword);
+$stmtCheckPassword->bindParam(':medixId', $id);
+$stmtCheckPassword->execute();
+$existingPassword = $stmtCheckPassword->fetch(PDO::FETCH_ASSOC); // Use FETCH_ASSOC to get an associative array
+
+if ($existingPassword) {
+    if (password_verify($pepper . $password . $existingPassword['salt'], $existingPassword['password'])) {
+        // New password is the same as the old password
+        echo json_encode(["sameAsBefore" => true]);
+        exit;
+    }
+} else {
+    // Handle the case where the user doesn't exist or there's an issue with the database
+    http_response_code(500); // Internal Server Error
+    echo json_encode(["error" => "Error fetching existing password"]);
+    exit;
+}
 
 // Generate a new salt for password hashing.
 $salt = bin2hex(random_bytes(32));
@@ -27,11 +48,10 @@ $stmt->bindParam(':salt', $salt);
 $stmt->bindParam(':medixId', $id);
 
 if ($stmt->execute()) {
-    http_response_code(200); // Success
+    echo json_encode(["sameAsBefore" => false, "success" => true]);
 } else {
-    http_response_code(500); // Internal Server Error
+    echo json_encode(["sameAsBefore" => false, "success" => false]);
 }
 
 header('Content-Type: application/json');
-echo json_encode($response);
 ?>
